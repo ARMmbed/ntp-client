@@ -1,7 +1,7 @@
 #include "ntp-client/NTPClient.h"
 #include "mbed.h"
 
-const char* NTPClient::NIST_SERVER_ADDRESS = "pool.ntp.org";
+const char* NTPClient::NIST_SERVER_ADDRESS = "2.pool.ntp.org";
 const int NTPClient::NIST_SERVER_PORT = 123;
 
 NTPClient::NTPClient(NetworkInterface *iface) {
