@@ -1,11 +1,16 @@
 #include "ntp-client/NTPClient.h"
 #include "mbed.h"
 
-const char* NTPClient::NIST_SERVER_ADDRESS = "2.pool.ntp.org";
-const int NTPClient::NIST_SERVER_PORT = 123;
-
 NTPClient::NTPClient(NetworkInterface *iface) {
-    this->iface = iface;    
+    this->iface = iface;   
+    
+    _nist_server_address = NTP_DEFULT_NIST_SERVER_ADDRESS;
+    _nist_server_port = NTP_DEFULT_NIST_SERVER_PORT;
+}
+
+void NTPClient::set_server(char* server, int port){
+    _nist_server_address = server;
+    _nist_server_port = port;
 }
 
 time_t NTPClient::get_timestamp(int timeout) {
@@ -14,14 +19,14 @@ time_t NTPClient::get_timestamp(int timeout) {
     int ntp_recv_values[12] = {0};
     
     SocketAddress nist;
-    int ret_gethostbyname = iface->gethostbyname(NIST_SERVER_ADDRESS, &nist);
+    int ret_gethostbyname = iface->gethostbyname(_nist_server_address, &nist);
     
     if (ret_gethostbyname < 0) {
         // Network error on DNS lookup
         return ret_gethostbyname;
     }
     
-    nist.set_port(NIST_SERVER_PORT);
+    nist.set_port(_nist_server_port);
     
     memset(ntp_send_values, 0x00, sizeof(ntp_send_values));
     ntp_send_values[0] = '\x1b';
