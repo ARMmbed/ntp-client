@@ -2,7 +2,7 @@
 #include "mbed.h"
 
 NTPClient::NTPClient(NetworkInterface *iface)
-: iface(iface), nist_server_address(NTP_DEFULT_NIST_SERVER_ADDRESS), nist_server_port(NTP_DEFULT_NIST_SERVER_PORT) {
+: iface(iface), nist_server_address((char *)NTP_DEFULT_NIST_SERVER_ADDRESS), nist_server_port(NTP_DEFULT_NIST_SERVER_PORT) {
 }
 
 void NTPClient::set_server(char* server, int port){
@@ -11,7 +11,7 @@ void NTPClient::set_server(char* server, int port){
 }
 
 time_t NTPClient::get_timestamp(int timeout) {
-    time_t TIME1970 = (time_t)2208988800L;
+    const time_t TIME1970 = (time_t)2208988800UL;
     int ntp_send_values[12] = {0};
     int ntp_recv_values[12] = {0};
 
