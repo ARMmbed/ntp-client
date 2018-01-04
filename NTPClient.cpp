@@ -11,7 +11,7 @@ void NTPClient::set_server(char* server, int port){
 }
 
 time_t NTPClient::get_timestamp(int timeout) {
-    const time_t TIME1970 = 2208988800L;
+    time_t TIME1970 = (time_t)2208988800L;
     int ntp_send_values[12] = {0};
     int ntp_recv_values[12] = {0};
 
@@ -34,7 +34,7 @@ time_t NTPClient::get_timestamp(int timeout) {
     sock.open(iface);
     sock.set_timeout(timeout);
 
-    int ret_send = sock.sendto(nist, (void*)ntp_send_values, sizeof(ntp_send_values));
+    sock.sendto(nist, (void*)ntp_send_values, sizeof(ntp_send_values));
 
     SocketAddress source;
     const int n = sock.recvfrom(&source, (void*)ntp_recv_values, sizeof(ntp_recv_values));
