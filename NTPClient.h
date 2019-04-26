@@ -5,9 +5,10 @@
 
 class NTPClient {
     public:
-        NTPClient(NetworkInterface *iface);
+        explicit NTPClient(NetworkInterface *interface = NULL);
         void set_server(char* server, int port);
         time_t get_timestamp(int timeout = 15000);
+        void network(NetworkInterface *interface);
 
     private:
         NetworkInterface *iface;
