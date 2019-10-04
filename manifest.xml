@@ -1,0 +1,8 @@
+<package>
+    <description brief="ARM Mbed library to allow fetch time information from a NTP server.">
+    </description>
+    <maintainer>ARMmbed</maintainer>
+    <license>Apache-2.0</license>
+    <url>https://github.com/ARMmbed/ntp-client</url>
+</package>
+
