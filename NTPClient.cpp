@@ -18,10 +18,10 @@
 #include "mbed.h"
 
 NTPClient::NTPClient(NetworkInterface *interface)
-    : iface(interface), nist_server_address((char *)NTP_DEFULT_NIST_SERVER_ADDRESS), nist_server_port(NTP_DEFULT_NIST_SERVER_PORT) {
+    : iface(interface), nist_server_address(NTP_DEFULT_NIST_SERVER_ADDRESS), nist_server_port(NTP_DEFULT_NIST_SERVER_PORT) {
 }
 
-void NTPClient::set_server(char* server, int port) {
+void NTPClient::set_server(const char* server, int port) {
     nist_server_address = server;
     nist_server_port = port;
 }
