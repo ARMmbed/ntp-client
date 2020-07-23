@@ -26,7 +26,7 @@ void NTPClient::set_server(const char* server, int port) {
     nist_server_port = port;
 }
 
-time_t NTPClient::get_timestamp(int timeout) {
+int64_t NTPClient::get_timestamp(int timeout) {
     const time_t TIME1970 = (time_t)2208988800UL;
     int ntp_send_values[12] = {0};
     int ntp_recv_values[12] = {0};

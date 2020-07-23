@@ -23,7 +23,7 @@ class NTPClient {
     public:
         explicit NTPClient(NetworkInterface *interface = NULL);
         void set_server(const char* server, int port);
-        time_t get_timestamp(int timeout = 15000);
+        int64_t get_timestamp(int timeout = 15000);
         void network(NetworkInterface *interface);
 
     private:
