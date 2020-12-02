@@ -15,6 +15,7 @@
  */
 
 #include "mbed.h"
+#include "platform/mbed_toolchain.h"
 
 #define NTP_DEFULT_NIST_SERVER_ADDRESS "2.pool.ntp.org"
 #define NTP_DEFULT_NIST_SERVER_PORT 123
@@ -22,8 +23,16 @@
 class NTPClient {
     public:
         explicit NTPClient(NetworkInterface *interface = NULL);
+
         void set_server(const char* server, int port);
+
+        int get_timestamp(time_t &timestamp, int timeout = 15000);
+
+        MBED_DEPRECATED(
+            "This cannot return negative error codes with ARM toolchain's unsigned time_t. "
+            "Please use int get_timestamp(time_t &timestamp, int timeout) instead")
         time_t get_timestamp(int timeout = 15000);
+
         void network(NetworkInterface *interface);
 
     private:

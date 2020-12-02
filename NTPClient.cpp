@@ -26,7 +26,7 @@ void NTPClient::set_server(const char* server, int port) {
     nist_server_port = port;
 }
 
-time_t NTPClient::get_timestamp(int timeout) {
+int NTPClient::get_timestamp(time_t &timestamp, int timeout) {
     const time_t TIME1970 = (time_t)2208988800UL;
     int ntp_send_values[12] = {0};
     int ntp_recv_values[12] = {0};
@@ -58,8 +58,8 @@ time_t NTPClient::get_timestamp(int timeout) {
         const int n = sock.recvfrom(&source, (void*)ntp_recv_values, sizeof(ntp_recv_values));
 
         if (n > 10) {
-            return ntohl(ntp_recv_values[10]) - TIME1970;
-
+            timestamp = ntohl(ntp_recv_values[10]) - TIME1970;
+            return 0;
         } else {
             if (n < 0) {
                 // Network error
@@ -74,6 +74,18 @@ time_t NTPClient::get_timestamp(int timeout) {
     } else {
         // No network interface
         return -2;
+    }
+}
+
+time_t NTPClient::get_timestamp(int timeout) {
+    time_t timestamp;
+    int ret = get_timestamp(timestamp, timeout);
+    if (ret < 0) {
+        // This doesn't work with the ARM toolchain whose time_t is unsigned
+        // Please use the new API get_timestamp(time_t *timestamp, int timeout)
+        return ret;
+    } else {
+        return timestamp;
     }
 }
 
