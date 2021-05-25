@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "ntp-client/NTPClient.h"
+#include "NTPClient.h"
 #include "mbed.h"
 
 NTPClient::NTPClient(NetworkInterface *interface)
